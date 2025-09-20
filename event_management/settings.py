@@ -9,11 +9,16 @@ load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key")
 DEBUG = os.getenv("DEBUG", "True") == "True"
-ALLOWED_HOSTS = ['*']
+# Hosts
+ALLOWED_HOSTS = ["event-management-project-v2-00.onrender.com", "127.0.0.1", "localhost"]
+
+# CSRF trusted origins
 CSRF_TRUSTED_ORIGINS = [
-    'http://127.0.0.1:8000',
-    'http://*.onrender.com',
+    "https://event-management-project-v2-00.onrender.com",
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
 ]
+
 
 
 INSTALLED_APPS = [
@@ -85,9 +90,9 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 DATABASES = {
     'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://eventmanager_db_6qyt_user:xDkNcMyX1keSeOyHHwuhBlJrybTQ1rVA@dpg-d37hbrer433s73ep19e0-a.oregon-postgres.render.com/eventmanager_db_6qyt',
-        conn_max_age=600
+        default="postgresql://eventmanager_db_6qyt_user:xDkNcMyX1keSeOyHHwuhBlJrybTQ1rVA@dpg-d37hbrer433s73ep19e0-a.oregon-postgres.render.com/eventmanager_db_6qyt",
+        conn_max_age=600,
+        ssl_require=True 
     )
 }
 
