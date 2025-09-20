@@ -1,0 +1,13 @@
+{
+  "name": "event-management-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i ./frontend/src/input.css -o ./static/css/styles.css --minify",
+    "watch:css": "tailwindcss -i ./frontend/src/input.css -o ./static/css/styles.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.0.0",
+    "postcss": "^8.0.0",
+    "autoprefixer": "^10.0.0"
+  }
+}

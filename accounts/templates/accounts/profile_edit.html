@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block content %}
+<div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+  <h2 class="text-2xl font-bold mb-6 text-center">Edit Profile</h2>
+
+  <form method="post" enctype="multipart/form-data" class="space-y-5">
+    {% csrf_token %}
+
+    <!-- Profile Picture -->
+    <div class="flex flex-col items-center">
+      {% if user.profile_picture and user.profile_picture.url %}
+        <img src="{{ user.profile_picture.url }}" alt="Profile Picture"
+             class="w-24 h-24 rounded-full object-cover border-2 border-gray-300 mb-3">
+      {% else %}
+        <img src="https://res.cloudinary.com/dxvzjzetq/image/upload/v1758311366/default_avatar_d9sq4s.png"
+             alt="Default Profile Picture"
+             class="w-24 h-24 rounded-full object-cover border-2 border-gray-300 mb-3">
+      {% endif %}
+      <input type="file" name="profile_picture" class="text-sm text-gray-600">
+    </div>
+
+    <!-- First & Last Name -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">First Name</label>
+      {{ form.first_name }}
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Last Name</label>
+      {{ form.last_name }}
+    </div>
+
+    <!-- Bio -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Bio</label>
+      {{ form.bio }}
+    </div>
+
+    <!-- Phone Number -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+      {{ form.phone_number }}
+    </div>
+
+    <!-- Date of Birth -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
+      {{ form.date_of_birth }}
+    </div>
+
+    <div class="flex justify-center">
+      <button type="submit"
+              class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-medium shadow">
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}

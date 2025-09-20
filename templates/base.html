@@ -1,0 +1,172 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Event Management{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom CSS if needed -->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50">
+
+  <!--Navbar -->
+
+
+
+  <nav class="bg-[#0f172a] text-white p-4 shadow-md">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="{% url 'home' %}" class="font-bold text-xl">EventManager</a>
+    <div class="space-x-3 flex items-center">
+      <a href="{% url 'events:list' %}" class="px-3 py-2 hover:bg-blue-700 rounded">Events</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'accounts:profile' %}" class="px-3 py-2 hover:bg-blue-700 rounded">Dashboard</a>
+        
+        <!-- Logout form -->
+        <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="px-3 py-2 bg-white text-blue-700 rounded hover:bg-gray-100">
+            Logout
+          </button>
+        </form>
+      {% else %}
+        <a href="{% url 'accounts:login' %}" class="px-3 py-2 bg-white text-blue-700 rounded">Sign In</a>
+        <a href="{% url 'accounts:signup' %}" class="px-3 py-2 bg-white text-blue-700 rounded">Sign Up</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+
+  {% comment %} <nav class="bg-gradient-to-r from-indigo-600 to-indigo-400 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="{% url 'home' %}" class="font-bold text-xl">EventManager</a>
+      <div class="space-x-3 flex items-center">
+        <a href="{% url 'events:list' %}" class="px-3 py-2 hover:bg-indigo-500 rounded">Events</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'accounts:profile' %}" class="px-3 py-2 hover:bg-indigo-500 rounded">Dashboard</a>
+          
+          <!-- Logout form for POST method -->
+          <form method="post" action="{% url 'accounts:logout' %}" class="inline">
+            {% csrf_token %}
+            <button type="submit" class="px-3 py-2 bg-white text-indigo-700 rounded hover:bg-gray-100">
+              Logout
+            </button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" class="px-3 py-2 bg-white text-indigo-700 rounded">Sign In</a>
+          <a href="{% url 'accounts:signup' %}" class="px-3 py-2 bg-white text-indigo-700 rounded">Sign Up</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav> {% endcomment %}
+
+  <!-- Messages -->
+  {% if messages %}
+    <div class="container mx-auto mt-4">
+      {% for message in messages %}
+        <div class="p-3 mb-2 rounded bg-indigo-100 text-indigo-800">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Hero Section (Home Page only) -->
+  {% comment %} {% if request.resolver_match.url_name == "home" %}
+  <section class="bg-gray-100 py-20 text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Event Manager 🎉</h1>
+    <p class="text-lg text-gray-600 mb-6">Manage your events, register participants, and stay connected.</p>
+    <a href="{% url 'accounts:signup' %}" 
+       class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg shadow-md transition">
+      Get Started
+    </a>
+  </section>
+  {% endif %} {% endcomment %}
+
+  <!-- Main Content -->
+  <main class="flex-grow container mx-auto p-6">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  {% comment %} <footer class="bg-gray-100 p-6 text-center text-gray-600">
+    <p>© {% now "Y" %} EventManager. All rights reserved.</p>
+  </footer> {% endcomment %}
+
+
+
+  <footer class="bg-[#0f172a] text-white mt-16">
+  <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
+    
+    <!-- Column 1 -->
+    <div>
+      <h3 class="text-2xl font-bold mb-4">EventHub</h3>
+      <p class="text-gray-400 text-sm leading-6">
+        Event Manager makes it simple to <span class="text-indigo-400">create</span>, 
+        <span class="text-indigo-400">manage</span>, and <span class="text-indigo-400">join</span> events.  
+        Empowering communities to connect & celebrate.
+      </p>
+    </div>
+
+    <!-- Column 2 -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+      <ul class="space-y-2 text-gray-300 text-sm">
+        <li><a href="{% url 'events:list' %}" class="hover:text-indigo-400 transition">All Events</a></li>
+        <li><a href="{% url 'accounts:profile' %}" class="hover:text-indigo-400 transition">My Profile</a></li>
+        <li><a href="{% url 'events:create' %}" class="hover:text-indigo-400 transition">Create Event</a></li>
+        <li><a href="{% url 'accounts:logout' %}" class="hover:text-indigo-400 transition">Logout</a></li>
+      </ul>
+    </div>
+
+    <!-- Column 3 -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4">Stay Connected</h4>
+      <div class="flex flex-col space-y-3 text-gray-300 text-sm">
+        <a href="https://www.instagram.com/ta_mim" target="_blank" class="hover:text-pink-400 transition">
+          <i class="fab fa-instagram mr-2"></i> Instagram
+        </a>
+        <a href="https://www.facebook.com/Tamim69Bhai" target="_blank" class="hover:text-blue-400 transition">
+          <i class="fab fa-facebook mr-2"></i> Facebook
+        </a>
+        <a href="https://x.com/TAMIMISLAM38" target="_blank" class="hover:text-sky-400 transition">
+          <i class="fab fa-twitter mr-2"></i> X (Twitter)
+        </a>
+        <a href="https://www.linkedin.com/in/tamimbhai" target="_blank" class="hover:text-blue-300 transition">
+          <i class="fab fa-linkedin mr-2"></i> LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- Column 4 (Support) -->
+    <div>
+      <h4 class="text-lg font-semibold mb-4">Support</h4>
+      <p class="text-gray-400 text-sm mb-3">
+        Need help? Click below to send me an email directly.
+      </p>
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=eventmanagement.noreply@gmail.com" 
+         target="_blank"
+         class="block w-full text-center bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-semibold transition">
+        📧 Send Email
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
+    © {{ now|date:"Y" }} EventManager. Crafted by Tamim Islam.
+  </div>
+</footer>
+
+
+
+
+
+</body>
+</html>

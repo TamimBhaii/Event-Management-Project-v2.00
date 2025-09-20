@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Events{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Upcoming Events</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  {% for event in events %}
+    <div class="bg-white p-4 rounded-lg shadow">
+      {% if event.image %}
+        <img src="{{ event.image.url }}" alt="{{ event.title }}" class="h-40 w-full object-cover rounded mb-3">
+      {% endif %}
+      <h2 class="text-xl font-semibold">{{ event.title }}</h2>
+      <p class="text-sm text-gray-600">{{ event.start_time|date:"M d, Y H:i" }} - {{ event.end_time|date:"H:i" }}</p>
+      <p class="mt-2 text-gray-700">{{ event.description|truncatewords:18 }}</p>
+      <div class="mt-3 flex justify-between items-center">
+        <a href="{% url 'events:detail' event.pk %}" class="text-indigo-600 hover:underline">View</a>
+        <span class="text-sm text-gray-500">By {{ event.organizer.username }}</span>
+      </div>
+    </div>
+  {% empty %}
+    <p>No upcoming events.</p>
+  {% endfor %}
+</div>
+
+<div class="mt-6">
+  {% if is_paginated %}
+    <div class="flex justify-center space-x-2">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded">Prev</a>
+      {% endif %}
+      <span class="px-3 py-1 bg-indigo-100 rounded">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded">Next</a>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

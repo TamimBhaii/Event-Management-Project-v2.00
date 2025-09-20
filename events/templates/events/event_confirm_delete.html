@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Delete Event{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow text-center">
+  <h2 class="text-xl font-bold mb-4">Delete "{{ object }}" ?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded">Yes, Delete</button>
+    <a href="{% url 'events:detail' object.pk %}" class="ml-2 px-4 py-2 bg-gray-400 text-white rounded">Cancel</a>
+  </form>
+</div>
+{% endblock %}

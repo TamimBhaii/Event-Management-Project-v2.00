@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10">
+  <!-- Profile Card -->
+  <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+    <!-- Avatar -->
+    <div class="flex justify-center">
+      {% if user.profile_picture and user.profile_picture.url %}
+        <img src="{{ user.profile_picture.url }}"
+             alt="Avatar"
+             class="w-28 h-28 rounded-full object-cover border-4 border-indigo-500 shadow-md">
+      {% else %}
+        <img src="https://res.cloudinary.com/dxvzjzetq/image/upload/v1758311366/default_avatar_d9sq4s.png"
+             alt="Default Avatar"
+             class="w-28 h-28 rounded-full object-cover border-4 border-indigo-500 shadow-md">
+      {% endif %}
+    </div>
+
+    <!-- Name & Bio -->
+    <h2 class="text-2xl font-bold mt-4">{{ user.get_full_name|default:user.username }}</h2>
+    <p class="text-gray-600 text-sm mt-2">{{ user.bio|default:"No bio added yet." }}</p>
+    <p class="text-gray-400 text-xs mt-1">Joined on {{ user.date_joined|date:"F j, Y" }}</p>
+  </div>
+
+  <!-- Event Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+    <div class="bg-indigo-100 p-6 rounded-xl text-center shadow">
+      <h3 class="text-lg font-semibold text-indigo-800">Total Events</h3>
+      <p class="text-3xl font-bold text-indigo-900">{{ stats.total }}</p>
+    </div>
+    <div class="bg-green-100 p-6 rounded-xl text-center shadow">
+      <h3 class="text-lg font-semibold text-green-800">Upcoming Events</h3>
+      <p class="text-3xl font-bold text-green-900">{{ stats.upcoming }}</p>
+    </div>
+    <div class="bg-red-100 p-6 rounded-xl text-center shadow">
+      <h3 class="text-lg font-semibold text-red-800">Past Events</h3>
+      <p class="text-3xl font-bold text-red-900">{{ stats.past }}</p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="flex flex-wrap gap-4 justify-center mt-8">
+    <a href="{% url 'events:list' %}"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-medium shadow">
+      View All Events
+    </a>
+    <a href="{% url 'events:create' %}"
+       class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-medium shadow">
+      Create Event
+    </a>
+    <a href="{% url 'accounts:profile_edit' %}"
+       class="bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg font-medium shadow">
+      Edit Profile
+    </a>
+    <a href="{% url 'accounts:change_password' %}"
+       class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg font-medium shadow">
+      Change Password
+    </a>
+  </div>
+</div>
+{% endblock %}
