@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
     profile_picture = models.ImageField(
-        upload_to=profile_image_path,  # ✅ Cloudinary folder path
+        upload_to=profile_image_path,  #  Cloudinary folder path
         blank=True,
         null=True
     )

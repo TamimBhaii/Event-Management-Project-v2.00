@@ -29,7 +29,7 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     location = models.CharField(max_length=300, blank=True)
 
-    # Cloudinary তে image save হবে (upload_to শুধু path define করবে)
+
     image = models.ImageField(
         upload_to=event_image_path,
         blank=True,
