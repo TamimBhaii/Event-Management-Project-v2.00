@@ -1,4 +1,3 @@
-# accounts/views.py
 from django.contrib.auth.models import Group
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import logout
@@ -24,7 +23,7 @@ from events.models import Event   # event stats
 class SignUpView(FormView):
     template_name = 'accounts/signup.html'
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('accounts:login')
+    success_url = reverse_lazy('accounts:activation_sent')  # updated
 
     def form_valid(self, form):
         user = form.save(commit=False)

@@ -1,5 +1,6 @@
 # accounts/urls.py
 from django.urls import path, reverse_lazy
+from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from .views import (
     SignUpView, ActivateAccountView, ProfileView,
@@ -10,6 +11,7 @@ app_name = 'accounts'
 
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
+      path("activation-sent/", TemplateView.as_view(template_name="accounts/activation_sent.html"), name="activation_sent"),
     path('activate/<uidb64>/<token>/', ActivateAccountView.as_view(), name='activate'),
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/edit/', ProfileUpdateView.as_view(), name='profile_edit'),
